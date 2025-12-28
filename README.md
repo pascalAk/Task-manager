@@ -120,3 +120,12 @@ This is an assignment project. For questions or issues, please refer to the indi
 
 This project is part of an assignment submission.
 
+## Live Backend URL
+
+The backend API is deployed on Render:
+
+https://task-manager-eba2.onrender.com
+
+Health check:
+https://task-manager-eba2.onrender.com/health
+
