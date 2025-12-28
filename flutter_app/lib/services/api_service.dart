@@ -1,20 +1,10 @@
-import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/task.dart';
 import '../models/task_history.dart';
 
 class ApiService {
-  static String get baseUrl {
-    if (kIsWeb) {
-      return 'http://localhost:3000';
-    } else if (Platform.isAndroid) {
-      return 'http://10.0.2.2:3000';
-    } else {
-      return 'http://localhost:3000';
-    }
-  }
+  static const String baseUrl = 'https://task-manager-eba2.onrender.com';
 
   static Future<List<Task>> getTasks() async {
     try {
