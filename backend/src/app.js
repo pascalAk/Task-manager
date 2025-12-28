@@ -27,5 +27,23 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Task Management API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/health',
+      tasks: {
+        getAll: 'GET /api/tasks',
+        getById: 'GET /api/tasks/:id',
+        create: 'POST /api/tasks',
+        update: 'PUT /api/tasks/:id',
+        history: 'GET /api/tasks/:id/history'
+      }
+    },
+    documentation: 'See README.md for detailed API documentation'
+  });
+});
+
 module.exports = app;
 

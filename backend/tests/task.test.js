@@ -19,6 +19,20 @@ describe('Task API Tests', () => {
     jest.clearAllMocks();
   });
 
+  describe('GET /', () => {
+    it('should return API information', async () => {
+      const response = await request(app)
+        .get('/')
+        .expect(200);
+
+      expect(response.body).toHaveProperty('message');
+      expect(response.body).toHaveProperty('version');
+      expect(response.body).toHaveProperty('endpoints');
+      expect(response.body.endpoints).toHaveProperty('health');
+      expect(response.body.endpoints).toHaveProperty('tasks');
+    });
+  });
+
   describe('GET /health', () => {
     it('should return status 200 and { status: "ok" }', async () => {
       const response = await request(app)
