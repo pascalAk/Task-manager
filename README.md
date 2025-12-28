@@ -46,13 +46,26 @@ cd backend
 npm install
 ```
 
-Create a `.env` file with your database configuration, then start the server:
+Create a `.env` file with your database configuration. You'll need to set up your PostgreSQL connection string or use Supabase. Then start the server:
 
 ```bash
-node src/server.js
+npm start
+# or for development
+npm run dev
 ```
 
 The backend API will be available at `http://localhost:3000`
+
+#### Running Tests
+
+The backend includes unit tests using Jest and Supertest. To run the tests:
+
+```bash
+cd backend
+npm test
+```
+
+The test suite covers API endpoints including health checks, task retrieval, and task creation. All tests should pass before deployment.
 
 ### Flutter App Setup
 
@@ -94,6 +107,7 @@ flutter run -d linux
 - Express.js
 - PostgreSQL (via Supabase)
 - pg (node-postgres)
+- Jest & Supertest (for unit testing)
 
 ### Frontend
 - Flutter
@@ -101,16 +115,68 @@ flutter run -d linux
 - Material Design 3
 - HTTP package for API communication
 
+## Live Backend
+
+The backend API is deployed and live on Render. You can access it at:
+
+- Base URL: https://task-manager-eba2.onrender.com
+- Health Check: https://task-manager-eba2.onrender.com/health
+
+The backend is fully functional and ready to handle requests from the Flutter application. All API endpoints are available at the deployed URL.
+
+## Flutter App
+
+The Flutter application connects to the live backend and provides a complete task management interface. The app includes:
+
+- Task List: Displays all tasks fetched from the live backend, showing task title, status badges, and assigned user information
+- Status Updates: Allows users to update task status to completed with visual feedback and loading indicators
+- Task History: Provides a detailed timeline view of all actions performed on each task, including creation, updates, and completion events
+- Pull-to-Refresh: Enables users to refresh the task list by pulling down on the screen
+- Error Handling: Shows user-friendly error messages with retry options
+- Empty States: Displays clear messages when no tasks or history entries are available
+
+The app automatically connects to the deployed backend and works seamlessly across all supported platforms.
+
+## Screenshots
+
+Screenshots of the Flutter application are available in the `flutter_app/screenshots/` directory:
+
+- `task_list.png` - The task list screen showing all available tasks with their status badges and assigned users
+- `task_history.png` - The task history screen displaying the complete timeline of actions for a selected task
+
+These screenshots demonstrate the app's UI and functionality across different screens.
+
 ## API Endpoints
 
-The backend provides the following endpoints:
+The backend provides the following RESTful endpoints:
 
-- GET `/health` - Health check
-- GET `/api/tasks` - Get all tasks
-- GET `/api/tasks/:id` - Get a single task
-- POST `/api/tasks` - Create a new task
-- PUT `/api/tasks/:id` - Update task status
-- GET `/api/tasks/:id/history` - Get task history
+### Health Check
+- **GET** `/health` - Returns server health status
+  - Example: `GET https://task-manager-eba2.onrender.com/health`
+  - Response: `{ "status": "ok" }`
+
+### Tasks
+- **GET** `/api/tasks` - Get all tasks
+  - Example: `GET https://task-manager-eba2.onrender.com/api/tasks`
+  - Returns: Array of task objects
+
+- **GET** `/api/tasks/:id` - Get a single task by ID
+  - Example: `GET https://task-manager-eba2.onrender.com/api/tasks/1`
+  - Returns: Single task object or 404 if not found
+
+- **POST** `/api/tasks` - Create a new task
+  - Example: `POST https://task-manager-eba2.onrender.com/api/tasks`
+  - Body: `{ "title": "Task title", "description": "Task description", "assigned_to": "User name", "status": "created" }`
+  - Returns: Created task object (201) or error (400/500)
+
+- **PUT** `/api/tasks/:id` - Update task status
+  - Example: `PUT https://task-manager-eba2.onrender.com/api/tasks/1`
+  - Body: `{ "status": "completed" }`
+  - Returns: Updated task object (200) or error (404/500)
+
+- **GET** `/api/tasks/:id/history` - Get task history
+  - Example: `GET https://task-manager-eba2.onrender.com/api/tasks/1/history`
+  - Returns: Array of history entries for the task
 
 ## Contributing
 
